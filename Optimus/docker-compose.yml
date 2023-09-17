@@ -1,0 +1,44 @@
+version: '3.9'
+services:
+  company1:
+    build:
+      context: .
+      dockerfile: Company1.Api/Dockerfile
+    ports:
+      - "8081:80"
+    networks:
+      - mynetwork
+      
+  company2:
+    build:
+      context: .
+      dockerfile: Company2.Api/Dockerfile
+    ports:
+      - "8082:80"
+    networks:
+      - mynetwork
+      
+  company3:
+    build:
+      context: .
+      dockerfile: Company3.Api/Dockerfile
+    ports:
+      - "8083:80"
+    networks:
+      - mynetwork
+      
+  optimus:
+    build:
+      context: .
+      dockerfile: Optimus.AtHomeBestOffer.Host/Dockerfile
+    ports:
+      - "8084:80"
+    environment:
+      - Company1Endpoint=http://company1:80/OfferProposal
+      - Company2Endpoint=http://company2:80/OfferProposal
+      - Company3Endpoint=http://company3:80/OfferProposal
+    networks:
+      - mynetwork
+      
+networks:
+  mynetwork:
